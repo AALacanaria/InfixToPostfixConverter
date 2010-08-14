@@ -1,0 +1,8 @@
+This is my solution(a little ugly) to convert expression from infix notation to postfix notation, i got this problem from TDD problem site( http://sites.google.com/site/tddproblems/all-problems-1/convert-infix-expression-to-postfix-form).
+
+
+public void testDeveConverterVezesMais(){
+	assertEquals("325+*", converter.converterToPostFix("3*(2+5)"));
+}
+
+Check test directory for more examples.

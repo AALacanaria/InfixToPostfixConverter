@@ -77,5 +77,10 @@ public class InfixToPostixConverterTest extends TestCase {
 	public void testDeveConverterDividirEVezes(){
 		assertEquals("ab/c*", converter.converterToPostFix("((a/b)*c)"));
 	}
+	
+	public void testDeveConverterVezesMais(){
+		assertEquals("325+*", converter.converterToPostFix("3*(2+5)"));
+	}
+	
 
 }
