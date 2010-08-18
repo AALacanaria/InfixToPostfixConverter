@@ -1,14 +1,9 @@
-/**
- * @author edipofederle
- *
- */
-
 import java.util.Stack;
 
 public class InfixToPostfixConverter {
 
 	Stack<String> pilha = new Stack<String>();
-	int i = 1;
+	int pointer = 1;
 
 	public String converterToPostFix(String infix) {
 		infix += ")";
@@ -16,23 +11,23 @@ public class InfixToPostfixConverter {
 		pilha.push("(");
 		String postfix = "";
 		while (!pilha.empty()) {
-			if ((isADigit(ex[i])) && (!ex[i].equals(")"))
-					&& (!ex[i].equals("(")))
-				postfix += ex[i];
-			if (ex[i].equals("("))
-				pilha.push(ex[i]);
-			if (isOperator(ex[i])) {
+			if ((isADigit(ex[pointer])) && (!ex[pointer].equals(")"))
+					&& (!ex[pointer].equals("(")))
+				postfix += ex[pointer];
+			if (ex[pointer].equals("("))
+				pilha.push(ex[pointer]);
+			if (isOperator(ex[pointer])) {
 				if (isOperator(pilha.peek())) {
-					while (precedence(pilha.peek(), ex[i])) {
+					while (precedence(pilha.peek(), ex[pointer])) {
 						postfix += pilha.pop();
 					}
 				}
-				pilha.push(ex[i]);
+				pilha.push(ex[pointer]);
 			}
-			if (ex[i].equals(")")) {
+			if (ex[pointer].equals(")")) {
 				postfix = removeFromStackUntilFindRightParenthesis(postfix);
 			}
-			i++;
+			pointer++;
 		}
 		return postfix;
 	}
@@ -46,7 +41,7 @@ public class InfixToPostfixConverter {
 	}
 
 	public static boolean isADigit(String digit) {
-		String[] symbols = { "+", "-", "*", "/" };
+		String[] symbols = { "+", "-", "*", "/", "^" };
 		boolean isSymbol = true;
 		for (String symbol : symbols) {
 			if (digit.equals(symbol))
@@ -57,7 +52,7 @@ public class InfixToPostfixConverter {
 
 	private boolean isOperator(String ch) {
 		if ((ch.equals("+")) || (ch.equals("-")) || (ch.equals("*"))
-				|| (ch.equals("/"))) {
+				|| (ch.equals("/")) || (ch.equals("^"))) {
 			return true;
 		} else
 			return false;
