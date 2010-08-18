@@ -1,86 +1,103 @@
 import junit.framework.TestCase;
 
-
 public class InfixToPostixConverterTest extends TestCase {
-	
-	InfixToPostfixConverter converter ;
-	
-	public void setUp(){
+
+	InfixToPostfixConverter converter;
+
+	public void setUp() {
 		converter = new InfixToPostfixConverter();
 	}
-	
-	public void testDeveVerificarApredecendia(){
-		//+ tem NAO tem precedencia sobre *
+
+	public void testDeveVerificarApredecendiaVezesMais() {
 		assertEquals(true, InfixToPostfixConverter.precedence("*", "+"));
 	}
-	
-	public void testDeveVerificarApredecendia2(){
-		//* tem  tem precedencia sobre *
+
+	public void testDeveVerificarApredecendiaVezesVezes() {
 		assertEquals(true, InfixToPostfixConverter.precedence("*", "*"));
 	}
-	
-	
-	public void testDeveVerificarApredecendia4(){
-		// precedence(atual, topo)
+
+	public void testDeveVerificarApredecendiaVezesMenos() {
 		assertEquals(true, InfixToPostfixConverter.precedence("*", "-"));
 	}
-	
-	public void testDeveVerificarApredecendia5(){
-		//- tem menor predecenaia sobre /
+
+	public void testDeveVerificarApredecendiaDividirMenos() {
 		assertEquals(true, InfixToPostfixConverter.precedence("/", "-"));
 	}
-	
-	public void testDeveVerificarSeEUmDigito(){
+
+	public void testDeveVerificarSeUmaVariavel() {
 		assertEquals(true, InfixToPostfixConverter.isADigit("a"));
 	}
-	
-	public void testDeveVerificarSeEUmDigito2(){
+
+	public void testDeveVerificarSeEUmDigito() {
 		assertEquals(true, InfixToPostfixConverter.isADigit("3"));
 	}
-	
-	public void testNaoDeveSerUmDigito(){
+
+	public void testDeveSerUmSimboloMais() {
 		assertEquals(false, InfixToPostfixConverter.isADigit("+"));
 	}
-	
-	public void testNaoDeveSerUmDigito2(){
+
+	public void testDeveSerUmSimboloDividir() {
 		assertEquals(false, InfixToPostfixConverter.isADigit("/"));
 	}
-	
-	public void testNaoDeveSerUmDigito3(){
+
+	public void testDeveSerUmSimboloMenos() {
 		assertEquals(false, InfixToPostfixConverter.isADigit("-"));
 	}
-	
-	public void testDeveConverterAMaisB(){
+
+	public void testDeveConverterDoisValoresComParenteses() {
 		assertEquals("ab+", converter.converterToPostFix("(a+b)"));
 	}
 	
-	public void testDeveConverterAMenosB(){
-		assertEquals("ab-", converter.converterToPostFix("(a-b)"));
+	public void testDeveConverterDoisValoresSemParenteses() {
+		assertEquals("ab+", converter.converterToPostFix("a+b"));
 	}
 	
-	public void testDeveConverterAVezesB(){
+	public void testDeveConverterTresValoresSemParenteses() {
+		assertEquals("ab+c+", converter.converterToPostFix("a+b+c"));
+	}
+	
+	public void testDeveConverterTresVariaveisComParenteses() {
+		assertEquals("abc++", converter.converterToPostFix("a+(b+c)"));
+	}
+
+	public void testDeveConverterDoisValoresMenosComParenteses() {
+		assertEquals("ab-", converter.converterToPostFix("(a-b)"));
+	}
+
+	public void testDeveConverterDoisValoresVezesComParenteses() {
 		assertEquals("ab*", converter.converterToPostFix("(a*b)"));
 	}
 	
-	public void testDeveConverterComMaisEVezes(){
-		assertEquals("62+5*", converter.converterToPostFix("(6+2)*5"));
-	}
-	
-	public void testDeveConverterComMaisEDividir(){
-		assertEquals("62+5/", converter.converterToPostFix("(6+2)/5"));
+	public void testDeveConverterTresValoresVezesSemParenteses() {
+		assertEquals("abc*+", converter.converterToPostFix("a+b*c"));
 	}
 
-	public void testDeveConverterSomaComTresVariaveis(){
+	public void testDeveConverterTresValoresMaisVezesComParenteses() {
+		assertEquals("62+5*", converter.converterToPostFix("(6+2)*5"));
+	}
+
+	public void testDeveConverterTresValoresMaisDividirComParenteses() {
+		assertEquals("62+5/", converter.converterToPostFix("(6+2)/5"));
+	}
+	
+	public void testDeveConverterTresValoresMaisDividirSemParenteses() {
+		assertEquals("abc/+", converter.converterToPostFix("a+b/c"));
+	}
+	
+	public void testDeveConverterTresValoresDividirSemParenteses() {
+		assertEquals("ab/c/", converter.converterToPostFix("a/b/c"));
+	}
+	
+	public void testDeveConverterTresValoresDividirComParenteses() {
+		assertEquals("ab/c/", converter.converterToPostFix("(a/b/c)"));
+	}
+
+	public void testDeveConverterTresValoresMaisComParenteses() {
 		assertEquals("abc++", converter.converterToPostFix("(a+(b+c))"));
 	}
-		
-	public void testDeveConverterDividirEVezes(){
+
+	public void testDeveConverterTresValoresDividirVexzesComParenteses() {
 		assertEquals("ab/c*", converter.converterToPostFix("((a/b)*c)"));
 	}
-	
-	public void testDeveConverterVezesMais(){
-		assertEquals("325+*", converter.converterToPostFix("3*(2+5)"));
-	}
-	
 
 }

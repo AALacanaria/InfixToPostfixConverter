@@ -1,3 +1,8 @@
+/**
+ * @author edipofederle
+ *
+ */
+
 import java.util.Stack;
 
 public class InfixToPostfixConverter {
@@ -21,8 +26,8 @@ public class InfixToPostfixConverter {
 					while (precedence(pilha.peek(), ex[i])) {
 						postfix += pilha.pop();
 					}
-				} else
-					pilha.push(ex[i]);
+				}
+				pilha.push(ex[i]);
 			}
 			if (ex[i].equals(")")) {
 				postfix = removeFromStackUntilFindRightParenthesis(postfix);
